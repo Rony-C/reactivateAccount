@@ -27,9 +27,6 @@ driver.get("https://admin.of.users/admin/")
 # Taken from: https://developers.google.com/sheets/api/quickstart/python
 def connectGoogleSheet():
     print("Connecting to Google Sheets...")
-    """Shows basic usage of the Sheets API.
-    Prints values from a sample spreadsheet.
-    """
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -42,7 +39,7 @@ def connectGoogleSheet():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                # Created from Google Dev portal
+                # Generated from Google Dev portal for authentication
                 '/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
@@ -52,7 +49,7 @@ def connectGoogleSheet():
     try:
         service = build('sheets', 'v4', credentials=creds)
 
-        # Call the Sheets API
+        # Call the Google Sheets API
         sheet = service.spreadsheets()
         result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
                                     range=RANGE_NAME).execute()
@@ -68,7 +65,7 @@ def connectGoogleSheet():
             date_format = datetime.datetime.strptime(date,"%d/%m/%Y")
             unix_time = datetime.datetime.timestamp(date_format)
             if(unix_time <= time.time()):
-                # Adds ID to list if it has
+                # Adds ID to list if there is a date match
                 userIds.append(row[0])
         print(f"{len(userIds)} account(s) to reactivate found...")
     except HttpError as err:
@@ -80,7 +77,7 @@ def loginToAdmin():
     loginButton.click()
 
     # Find username and password fields
-    userName = driver.find_element(by=By.CSS_SELECTOR, value="#loginId")
+    userName = driver.find_element(by=By.CSS_SELECTOR, value="#email")
     password = driver.find_element(by=By.CSS_SELECTOR, value="#password")
 
     # Enter username and password ##NOT SECURE UPDATE##
