@@ -3,7 +3,7 @@ Automate an account reactivation process
 
 The account reactivation process required the user to submit a request to reactivate their account.
 A Google Sheet is used to store the user ID and reactivation date.
-Google Sheet API is used to connect to the sheet.
+Google Sheet API is used to connect to the sheet. Source: https://developers.google.com/sheets/api/quickstart/python
 
 The script checks if the reactivate date is less than or equal to todays date. This is done by converting the date on the sheet and todays date to unix time.
 
